@@ -1,5 +1,6 @@
 ﻿using ECommerce.Api.Search.Interfaces;
 using ECommerce.Api.Search.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace ECommerce.Api.Search.Services
             this.ordersService = ordersService;
             this.productsService = productsService;
         }
+        [Route("api/search/Get")]
         public async Task<(bool IsSuccess, dynamic SearchResults)> SearchAsync(int customerId)
         {
             var orderResult = await ordersService.GetOrdersAsync(customerId);
@@ -27,7 +29,9 @@ namespace ECommerce.Api.Search.Services
                 {
                     foreach (var item in order.Items)
                     {
-                        item.ProductName = productResult.Products.FirstOrDefault(p => p.Id == item.Id)?.Name;
+                        item.ProductName = productResult.IsSuccess?
+                            productResult.Products.FirstOrDefault(p => p.Id == item.Id)?.Name :
+                        "Product not available";
                     }  
                 }
                 var result = new
