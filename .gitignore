@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+*.suo
+/ECommerce/ECommerce.Api.Customers/obj
+/ECommerce/ECommerce.Api.Orders/obj
+/ECommerce/Ecommerce.Api.Products/bin/Debug/netcoreapp3.1
+/ECommerce/Ecommerce.Api.Products/obj
+/ECommerce/ECommerce.Api.Search/obj
