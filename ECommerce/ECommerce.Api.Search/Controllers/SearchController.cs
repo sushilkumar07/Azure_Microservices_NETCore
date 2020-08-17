@@ -26,5 +26,28 @@ namespace ECommerce.Api.Search.Controllers
             }
             return NotFound();
         }
+        [HttpPost]
+        [Route("product")]
+        public async Task<IActionResult> SearchAsyncProdcut()
+        {
+            var result = await searchService.SearchAsyncProduct();
+            if (result.IsSuccess)
+            {
+                return Ok(result.SearchResults);
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        [Route("Customer")]
+        public async Task<IActionResult> SearchAsyncCustomer(SearchTerm term)
+        {
+            var result = await searchService.SearchCustomerAsync(term.CustomerId);
+            if (result.IsSuccess)
+            {
+                return Ok(result.SearchResults);
+            }
+            return NotFound();
+        }
     }
 }

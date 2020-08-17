@@ -12,13 +12,16 @@ namespace ECommerce.Api.Search.Services
     {
         private readonly IOrdersService ordersService;
         private readonly IProductsService productsService;
+        private readonly ICustomersService customersService;
 
-        public SearchService(IOrdersService ordersService,IProductsService productsService)
+        public SearchService(IOrdersService ordersService,
+                             IProductsService productsService,
+                             ICustomersService customersService)
         {
             this.ordersService = ordersService;
             this.productsService = productsService;
-        }
-        [Route("api/search/Get")]
+            this.customersService = customersService;
+        }        
         public async Task<(bool IsSuccess, dynamic SearchResults)> SearchAsync(int customerId)
         {
             var orderResult = await ordersService.GetOrdersAsync(customerId);
@@ -42,6 +45,37 @@ namespace ECommerce.Api.Search.Services
             }
             return (false, null);
         }
+
+        public async Task<(bool IsSuccess, dynamic SearchResults)> SearchAsyncProduct()
+        {            
+            var productResult = await productsService.GetProductsAsync();
+            if (productResult.IsSuccess)
+            {
+                var result = new
+                {
+                    products = productResult.Products
+                };
+                return (true, result.products);
+            }
+            return (false, null);
+        }
+
+        public async Task<(bool IsSuccess, dynamic SearchResults)> SearchCustomerAsync(int customerId)
+        {
+            var customersResult = await customersService.GetCustomerAsync(customerId);
+            if (customersResult.IsSuccess)
+            {
+                var result = new
+                {
+                    customer = customersResult.Customer
+                };
+                return (true, result.customer);
+            }
+            return (false, null);
+        }
+ 
+
+
         //public async Task<(bool IsSuccess, dynamic SearchResults)> SearchAsync(int customerId)
         //{
         //    await Task.Delay(1);
