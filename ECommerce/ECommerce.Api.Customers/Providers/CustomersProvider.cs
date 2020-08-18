@@ -31,6 +31,8 @@ namespace ECommerce.Api.Customers.Providers
                 dbContext.Customers.Add(new Db.Customer() { Id = 1, Name = "Jessica Smith", Address = "20 Elm St." });
                 dbContext.Customers.Add(new Db.Customer() { Id = 2, Name = "John Smith", Address = "30 Main St." });
                 dbContext.Customers.Add(new Db.Customer() { Id = 3, Name = "William Johnson", Address = "100 10th St." });
+                dbContext.Customers.Add(new Db.Customer() { Id = 4, Name = "sushil", Address = "Loghgoan" });
+                dbContext.Customers.Add(new Db.Customer() { Id = 5, Name = "ashish", Address = "Hadpsar" });
                 dbContext.SaveChanges();
             }
         }
@@ -62,6 +64,27 @@ namespace ECommerce.Api.Customers.Providers
             {
                 logger?.LogInformation("Querying customers");
                 var customer = await dbContext.Customers.FirstOrDefaultAsync(c => c.Id == id);
+                if (customer != null)
+                {
+                    logger?.LogInformation("Customer found");
+                    var result = mapper.Map<Db.Customer, Models.Customer>(customer);
+                    return (true, result, null);
+                }
+                return (false, null, "Not found");
+            }
+            catch (Exception ex)
+            {
+                logger?.LogError(ex.ToString());
+                return (false, null, ex.Message);
+            }
+        }
+
+        public async Task<(bool IsSuccess, Models.Customer Customer, string ErrorMessage)> GetCustomerNameAsync(string name)
+        {
+            try
+            {
+                logger?.LogInformation("Querying customers");
+                var customer = await dbContext.Customers.FirstOrDefaultAsync(c => c.Name == name);
                 if (customer != null)
                 {
                     logger?.LogInformation("Customer found");

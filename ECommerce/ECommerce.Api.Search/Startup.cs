@@ -31,6 +31,8 @@ namespace ECommerce.Api.Search
             services.AddScoped<IOrdersService, OrdersService>();
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<ICustomersService, CustomersService>();
+            services.AddScoped<ICustomersClient, CustomersClient>();
+            
             //Invoking the orders microservice from search
             services.AddHttpClient("OrdersService", config =>
             {

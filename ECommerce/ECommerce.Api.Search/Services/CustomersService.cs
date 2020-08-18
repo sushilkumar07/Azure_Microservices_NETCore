@@ -13,15 +13,20 @@ namespace ECommerce.Api.Search.Services
         private readonly IHttpClientFactory httpClientFactory;
         private readonly ILogger<CustomersService> logger;
 
-        public CustomersService(IHttpClientFactory httpClientFactory, ILogger<CustomersService> logger)
+        public CustomersService(IHttpClientFactory httpClientFactory, 
+            ILogger<CustomersService> logger)
         {
             this.httpClientFactory = httpClientFactory;
             this.logger = logger;
         }
+
+
+        // var client = await nSwagCustomerService.GetCustomerAsync(id); 
         public async Task<(bool IsSuccess, dynamic Customer, string ErrorMessage)> GetCustomerAsync(int id)
         {
             try
             {
+
                 var client = httpClientFactory.CreateClient("CustomersService");
                 var response = await client.GetAsync($"api/customers/{id}");
                 if (response.IsSuccessStatusCode)

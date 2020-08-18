@@ -10,11 +10,13 @@ namespace ECommerce.Api.Customers.Controllers
     {
         private readonly ICustomersProvider customersProvider;
 
+
         public CustomersController(ICustomersProvider customersProvider)
         {
             this.customersProvider = customersProvider;
+
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> GetCustomersAsync()
         {
@@ -26,6 +28,10 @@ namespace ECommerce.Api.Customers.Controllers
             return NotFound();
         }
 
+
+     
+
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomerAsync(int id)
         {
@@ -36,5 +42,16 @@ namespace ECommerce.Api.Customers.Controllers
             }
             return NotFound();
         }
+
+        //[HttpGet("{Name}")]
+        //public async Task<IActionResult> GetCustomerNameAsync(string Name)
+        //{
+        //    var result = await customersProvider.GetCustomerNameAsync(Name);
+        //    if (result.IsSuccess)
+        //    {
+        //        return Ok(result.Customer);
+        //    }
+        //    return NotFound();
+        //}
     }
 }

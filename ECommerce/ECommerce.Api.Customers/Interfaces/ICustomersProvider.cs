@@ -8,5 +8,9 @@ namespace ECommerce.Api.Customers.Interfaces
     {
         Task<(bool IsSuccess, IEnumerable<Customer> Customers, string ErrorMessage)> GetCustomersAsync();
         Task<(bool IsSuccess, Customer Customer, string ErrorMessage)> GetCustomerAsync(int id);
+
+        Task<(bool IsSuccess, Customer Customer, string ErrorMessage)> GetCustomerNameAsync(string name);
+
+        
     }
 }
